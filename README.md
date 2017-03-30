@@ -8,3 +8,4 @@ The main goal is to calculate the height of a stack of boxes. Each box has a hei
 
 ### The problem
 
+![alt tag](https://github.com/brendonbarreto/PileBox/blob/master/content/ex1.png)
