@@ -15,7 +15,8 @@ The main goal is to calculate the height of a stack of boxes. Each box has a hei
 To ensure that the application is calculating the height of the stack correctly, basically 3 tests are required. If you succeed in all, congratulations you won
 
 The boxes should be added sequentially, and conform to the specified sizes.
-[x, y] = A box with x of width and y of height
+
+**[x, y] = A box with x of width and y of height**
 
 ```
 Test 1: [2, 2] -> [1, 1] -> [1, 2] -> [2, 1] = 4
