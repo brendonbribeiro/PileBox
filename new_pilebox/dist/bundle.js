@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -28237,37 +28237,10 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 })();
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4).Buffer))
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28281,7 +28254,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _fabric = __webpack_require__(0);
 
-var _utils = __webpack_require__(3);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -28311,7 +28284,7 @@ var Box = function () {
 	}, {
 		key: 'draw',
 		value: function draw(canvas, currentHeight) {
-			var rect = new _fabric.fabric.Rect({
+			canvas.add(new _fabric.fabric.Rect({
 				top: canvas.height - currentHeight - _utils2.default.toPixelsSize(this.height),
 				left: canvas.width / 2 - _utils2.default.toPixelsSize(this.width) / 2,
 				width: _utils2.default.toPixelsSize(this.width),
@@ -28319,9 +28292,7 @@ var Box = function () {
 				fill: _utils2.default.getMaterialColor(),
 				stroke: 'white',
 				strokeWidth: 2
-			});
-
-			canvas.add(rect);
+			}));
 		}
 	}]);
 
@@ -28331,7 +28302,7 @@ var Box = function () {
 exports.default = Box;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28366,15 +28337,15 @@ var Utils = function () {
 module.exports = Utils;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
+
 
 var _fabric = __webpack_require__(0);
 
-var _box = __webpack_require__(2);
+var _box = __webpack_require__(1);
 
 var _box2 = _interopRequireDefault(_box);
 
@@ -28384,7 +28355,6 @@ var _pile2 = _interopRequireDefault(_pile);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import { Pile, Box } from './pilebox.js';
 var p4 = new _pile2.default();
 p4.addBox(2, 3);
 p4.addBox(1, 1);
@@ -28400,19 +28370,12 @@ p4.addBox(1, 1);
 p4.addBox(2, 2);
 p4.addBox(3, 3);
 
-console.log(p4.getHeight());
-
 var cv = new _fabric.fabric.Canvas('canvas');
-//cv.setBackgroundColor("#F44336", cv.renderAll.bind(cv));
 cv.setBackgroundColor("white", cv.renderAll.bind(cv));
-
-global.cv = cv;
 p4.draw(cv);
-//console.log(canvas);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30206,7 +30169,34 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 6 */
@@ -30469,11 +30459,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _fabric = __webpack_require__(0);
 
-var _utils = __webpack_require__(3);
+var _utils = __webpack_require__(2);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _box = __webpack_require__(2);
+var _box = __webpack_require__(1);
 
 var _box2 = _interopRequireDefault(_box);
 
@@ -30539,7 +30529,6 @@ var Pile = function () {
 			this.boxes.forEach(function (box, i) {
 				var currentHeight = pileStart + _utils2.default.toPixelsSize(_this.getHeightAt(i));
 				box.draw(canvas, currentHeight);
-
 				box.pile && box.pile.draw(canvas, currentHeight);
 			});
 		}

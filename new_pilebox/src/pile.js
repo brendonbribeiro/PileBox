@@ -43,7 +43,6 @@ export default class Pile {
 		this.boxes.forEach((box, i) => {
 			var currentHeight = pileStart + (Utils.toPixelsSize(this.getHeightAt(i)));
 			box.draw(canvas, currentHeight);
-
 			box.pile && box.pile.draw(canvas, currentHeight);
 		});
 	}

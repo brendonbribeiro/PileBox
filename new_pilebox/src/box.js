@@ -18,7 +18,7 @@ export default class Box {
 	}
 
 	draw(canvas, currentHeight) {
-		const rect = new fabric.Rect({
+		canvas.add(new fabric.Rect({
 			top: canvas.height - currentHeight - Utils.toPixelsSize(this.height),
 			left: (canvas.width / 2) - (Utils.toPixelsSize(this.width) / 2),
 			width: Utils.toPixelsSize(this.width),
@@ -26,8 +26,6 @@ export default class Box {
 			fill: Utils.getMaterialColor(),
 			stroke: 'white',
 			strokeWidth: 2
-		});
-
-		canvas.add(rect);
+		}));
 	}
 }
