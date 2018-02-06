@@ -85,19 +85,16 @@ class Pile {
 }
 
 var p4 = new Pile();
-p4.addBox(new Box(2, 3));
-p4.addBox(new Box(1, 1));
-p4.addBox(new Box(3, 3));
-p4.addBox(new Box(2, 2));
-p4.addBox(new Box(2, 2));
-p4.addBox(new Box(1, 1));
-p4.addBox(new Box(3, 3));
-p4.addBox(new Box(4, 4));
-p4.addBox(new Box(3, 3));
-p4.addBox(new Box(3, 3));
-p4.addBox(new Box(1, 1));
-p4.addBox(new Box(2, 2));
-p4.addBox(new Box(3, 3));
+p4.addBox(new Box(6, 6));
+p4.addBox(new Box(10, 4));
+p4.addBox(new Box(3, 1));
+p4.addBox(new Box(7, 1));
+p4.addBox(new Box(1, 8));
+p4.addBox(new Box(5, 5));
+p4.addBox(new Box(4, 7));
+p4.addBox(new Box(7, 3));
+p4.addBox(new Box(2, 4));
+p4.addBox(new Box(3, 5));
 
 var canvas = new fabric.Canvas('canvas');
 canvas.setBackgroundColor("#F44336", canvas.renderAll.bind(canvas));
