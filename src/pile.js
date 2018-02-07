@@ -53,8 +53,6 @@ export default class Pile {
   }
 
   clear(canvas, direction = 'left') {
-    //var direction = 'left';
-
     this.boxes.forEach((box, i) => {
       setTimeout(function() {
 				direction = direction == 'left' ? 'right' : 'left';
@@ -63,7 +61,7 @@ export default class Pile {
 				}
 
 				box.pile && box.pile.clear(canvas, direction);
-      }, i * 150);
+      }, i * 100);
     });
   }
 }
