@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+	<link rel="stylesheet" href="./style.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<div class="message is-info">
+		<div class="message-header">
+			Add box
+		</div>
+		<div class="message-body">
+			<div class="columns">
+				<div class="column">
+					<div class="field">
+						<div class="control">
+							<input class="input" id="width" type="text" placeholder="Width(px)">
+						</div>
+					</div>
+				</div>
+				<div class="column">
+					<div class="field">
+						<div class="control">
+							<input class="input" id="height" type="text" placeholder="Height(px)">
+						</div>
+					</div>
+				</div>
+				<div class="column is-4">
+					<button onclick="addBox()" class="button is-primary">
+				    <span class="icon">
+				      <i class="fas fa-plus"></i>
+				    </span>
+				    <span>Add</span>
+				  </button>
+					<button onclick="reset()" class="button is-danger">
+				    <span class="icon">
+				      <i class="fas fa-times"></i>
+				    </span>
+				    <span>Clear</span>
+				  </button>
+				</div>
+			</div>
+			<canvas id="canvas" width="960" height="600"></canvas>
+		</div>
+	</div>
+
+	<script src="./bundle.js"></script>
+</body>
+
+</html>
