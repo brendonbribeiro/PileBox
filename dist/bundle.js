@@ -28241,6 +28241,41 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utils = function () {
+  function Utils() {
+    _classCallCheck(this, Utils);
+  }
+
+  _createClass(Utils, null, [{
+    key: "getMaterialColor",
+    value: function getMaterialColor() {
+      var colors = ["F44336", "E91E63", "9C27B0", "673AB7", "3F51B5", "2196F3", "03A9F4", "00BCD4", "009688", "4CAF50", "8BC34A", "CDDC39", "FFEB3B", "FFC107", "FF9800", "FF5722", "795548", "9E9E9E", "607D8B"];
+      //https://stackoverflow.com/a/5915122
+      return '#' + colors[Math.floor(Math.random() * colors.length)];
+    }
+  }, {
+    key: "toPixelsSize",
+    value: function toPixelsSize(value) {
+      return value * 30;
+    }
+  }]);
+
+  return Utils;
+}();
+
+module.exports = Utils;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 var g;
@@ -28267,7 +28302,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28281,7 +28316,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _fabric = __webpack_require__(0);
 
-var _utils = __webpack_require__(3);
+var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
@@ -28351,41 +28386,6 @@ var Box = function () {
 exports.default = Box;
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Utils = function () {
-  function Utils() {
-    _classCallCheck(this, Utils);
-  }
-
-  _createClass(Utils, null, [{
-    key: "getMaterialColor",
-    value: function getMaterialColor() {
-      var colors = ["F44336", "E91E63", "9C27B0", "673AB7", "3F51B5", "2196F3", "03A9F4", "00BCD4", "009688", "4CAF50", "8BC34A", "CDDC39", "FFEB3B", "FFC107", "FF9800", "FF5722", "795548", "9E9E9E", "607D8B"];
-      //https://stackoverflow.com/a/5915122
-      return '#' + colors[Math.floor(Math.random() * colors.length)];
-    }
-  }, {
-    key: "toPixelsSize",
-    value: function toPixelsSize(value) {
-      return value * 30;
-    }
-  }]);
-
-  return Utils;
-}();
-
-module.exports = Utils;
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28394,7 +28394,7 @@ module.exports = Utils;
 
 var _fabric = __webpack_require__(0);
 
-var _box = __webpack_require__(2);
+var _box = __webpack_require__(3);
 
 var _box2 = _interopRequireDefault(_box);
 
@@ -28402,23 +28402,47 @@ var _pile = __webpack_require__(13);
 
 var _pile2 = _interopRequireDefault(_pile);
 
+var _utils = __webpack_require__(1);
+
+var _utils2 = _interopRequireDefault(_utils);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var pile = new _pile2.default();
 var cv = new _fabric.fabric.Canvas('canvas');
+
+var pileHeightText = new _fabric.fabric.Text('Tamanho da pilha: 0', {
+  fontFamily: 'Arial',
+  left: 10,
+  top: 10
+});
+
+cv.add(pileHeightText);
+
+var setPileHeightText = function setPileHeightText() {
+  console.log(pileHeightText);
+  pileHeightText.text = "Tamanho da pila: " + pile.getHeight();
+  pileHeightText.bringForward();
+};
 
 global.addBox = function () {
   pile.addBox(getWidth(), getHeight());
 
   //cv.clear();
   pile.draw(cv);
+  setPileHeightText();
+
+  var line = new _fabric.fabric.Line([cv.width - 10, cv.height, cv.width - 10, cv.height - _utils2.default.toPixelsSize(pile.getHeight())], {
+    strokeWidth: 2,
+    stroke: 'black'
+  });
+
+  cv.add(line);
 };
 
 global.reset = function () {
   pile.clear(cv);
   pile = new _pile2.default();
-  //cv.clear();
-  //pile = new Pile();
 };
 
 var getWidth = function getWidth() {
@@ -28428,7 +28452,7 @@ var getWidth = function getWidth() {
 var getHeight = function getHeight() {
   return parseInt(document.getElementById("height").value);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -30225,7 +30249,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 6 */
@@ -30488,11 +30512,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _fabric = __webpack_require__(0);
 
-var _utils = __webpack_require__(3);
+var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _box = __webpack_require__(2);
+var _box = __webpack_require__(3);
 
 var _box2 = _interopRequireDefault(_box);
 
