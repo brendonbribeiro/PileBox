@@ -6,7 +6,7 @@ class Utils {
   }
 
   static toPixelsSize(value){
-    return value * 30;
+    return value * 20;
   }
 }
 

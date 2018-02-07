@@ -23,13 +23,20 @@ export default class Box {
 
   draw(canvas, currentHeight) {
     var rect = new fabric.Rect({
-      top: 0,
+      top: 0 - Utils.toPixelsSize(this.height),
       left: (canvas.width / 2) - (Utils.toPixelsSize(this.width) / 2),
       width: Utils.toPixelsSize(this.width),
       height: Utils.toPixelsSize(this.height),
       fill: Utils.getMaterialColor(),
       stroke: 'white',
-      strokeWidth: 2
+      strokeWidth: 2,
+      lockMovementX: true,
+      lockMovementY: true,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockUniScaling: true,
+      lockRotation: true,
+      selectable: false
     });
 
     canvas.add(rect);
@@ -37,7 +44,7 @@ export default class Box {
     rect.animate('top', canvas.height - currentHeight - Utils.toPixelsSize(this.height), {
       duration: 1000,
       onChange: canvas.renderAll.bind(canvas),
-      easing: fabric.util.ease['easeOutQuint']
+      easing: fabric.util.ease['easeOutBounce']
     });
 
 		this.rect = rect;

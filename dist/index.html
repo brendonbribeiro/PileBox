@@ -8,42 +8,60 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body ng-app="PileApp" ng-controller="PileController">
 	<div class="message is-info">
 		<div class="message-header">
 			Add box
 		</div>
 		<div class="message-body">
+
 			<div class="columns">
 				<div class="column">
-					<div class="field">
-						<div class="control">
-							<input class="input" id="width" type="text" placeholder="Width(px)">
+					<form name="pileForm">
+						<div class="columns">
+
+							<div class="column">
+								<div class="field">
+									<div class="control">
+										<input ng-model="width" name="width" class="input {{ pileForm.width.$invalid ? 'is-danger' : 'is-success' }}" id="width" type="number" required min="1" max="20" placeholder="width">
+									</div>
+									<p ng-show="pileForm.width.$error.min" class="help is-danger">Width should be greater than 0</p>
+									<p ng-show="pileForm.width.$error.max" class="help is-danger">Width should be less than or equals to 20</p>
+									<p ng-show="pileForm.width.$error.required" class="help is-danger">Required</p>
+								</div>
+								<div class="help is-info">Canvas size: 600px. Scale: 1 - 20px</div>
+							</div>
+							<div class="column">
+								<div class="field">
+									<div class="control">
+										<input ng-model="height" name="height" class="input {{ pileForm.height.$invalid ? 'is-danger' : 'is-success' }}" id="height" type="number" required min="1" max="15" placeholder="height">
+									</div>
+									<p ng-show="pileForm.height.$error.min" class="help is-danger">Height should be greater than 0</p>
+									<p ng-show="pileForm.height.$error.max" class="help is-danger">Height should be less than or equals to 15</p>
+									<p ng-show="pileForm.height.$error.required" class="help is-danger">Required</p>
+								</div>
+							</div>
+
 						</div>
-					</div>
+					</form>
 				</div>
-				<div class="column">
-					<div class="field">
-						<div class="control">
-							<input class="input" id="height" type="text" placeholder="Height(px)">
-						</div>
-					</div>
-				</div>
+
 				<div class="column is-4">
-					<button onclick="addBox()" class="button is-primary">
-				    <span class="icon">
-				      <i class="fas fa-plus"></i>
-				    </span>
-				    <span>Add</span>
-				  </button>
-					<button onclick="reset()" class="button is-danger">
-				    <span class="icon">
-				      <i class="fas fa-times"></i>
-				    </span>
-				    <span>Clear</span>
-				  </button>
+					<button onclick="addBox()" class="button is-primary" ng-disabled="pileForm.$invalid" type="button">
+						<span class="icon">
+							<i class="fas fa-plus"></i>
+						</span>
+						<span>Add</span>
+					</button>
+					<button onclick="reset()" class="button is-danger" type="button">
+						<span class="icon">
+							<i class="fas fa-times"></i>
+						</span>
+						<span>Clear</span>
+					</button>
 				</div>
 			</div>
+
 			<canvas id="canvas" width="960" height="600"></canvas>
 		</div>
 	</div>
