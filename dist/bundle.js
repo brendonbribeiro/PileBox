@@ -28274,7 +28274,7 @@ module.exports = g;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28290,40 +28290,62 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Box = function () {
-	function Box(width, height) {
-		_classCallCheck(this, Box);
+  function Box(width, height) {
+    _classCallCheck(this, Box);
 
-		this.width = width;
-		this.height = height;
-		this.pile = null;
-	}
+    this.width = width;
+    this.height = height;
+    this.pile = null;
+    //this.drew = false;
+    this.rect = null;
+  }
 
-	_createClass(Box, [{
-		key: 'getHeight',
-		value: function getHeight() {
-			if (this.pile) {
-				var pileHeight = this.pile.getHeight();
-				return this.height > pileHeight ? this.height : pileHeight;
-			} else {
-				return this.height;
-			}
-		}
-	}, {
-		key: 'draw',
-		value: function draw(canvas, currentHeight) {
-			canvas.add(new _fabric.fabric.Rect({
-				top: canvas.height - currentHeight - _utils2.default.toPixelsSize(this.height),
-				left: canvas.width / 2 - _utils2.default.toPixelsSize(this.width) / 2,
-				width: _utils2.default.toPixelsSize(this.width),
-				height: _utils2.default.toPixelsSize(this.height),
-				fill: _utils2.default.getMaterialColor(),
-				stroke: 'white',
-				strokeWidth: 2
-			}));
-		}
-	}]);
+  _createClass(Box, [{
+    key: 'getHeight',
+    value: function getHeight() {
+      if (this.pile) {
+        var pileHeight = this.pile.getHeight();
+        return this.height > pileHeight ? this.height : pileHeight;
+      } else {
+        return this.height;
+      }
+    }
+  }, {
+    key: 'draw',
+    value: function draw(canvas, currentHeight) {
+      var rect = new _fabric.fabric.Rect({
+        top: 0,
+        left: canvas.width / 2 - _utils2.default.toPixelsSize(this.width) / 2,
+        width: _utils2.default.toPixelsSize(this.width),
+        height: _utils2.default.toPixelsSize(this.height),
+        fill: _utils2.default.getMaterialColor(),
+        stroke: 'white',
+        strokeWidth: 2
+      });
 
-	return Box;
+      canvas.add(rect);
+
+      rect.animate('top', canvas.height - currentHeight - _utils2.default.toPixelsSize(this.height), {
+        duration: 1000,
+        onChange: canvas.renderAll.bind(canvas),
+        easing: _fabric.fabric.util.ease['easeOutQuint']
+      });
+
+      this.rect = rect;
+      //this.drew = true;
+    }
+  }, {
+    key: 'clear',
+    value: function clear(canvas, direction) {
+      this.rect.animate('left', direction == 'left' ? 0 - _utils2.default.toPixelsSize(this.width) : canvas.width, {
+        duration: 1000,
+        onChange: canvas.renderAll.bind(canvas),
+        easing: _fabric.fabric.util.ease['easeOutQuint']
+      });
+    }
+  }]);
+
+  return Box;
 }();
 
 exports.default = Box;
@@ -28388,13 +28410,15 @@ var cv = new _fabric.fabric.Canvas('canvas');
 global.addBox = function () {
   pile.addBox(getWidth(), getHeight());
 
-  cv.clear();
+  //cv.clear();
   pile.draw(cv);
 };
 
 global.reset = function () {
-  cv.clear();
+  pile.clear(cv);
   pile = new _pile2.default();
+  //cv.clear();
+  //pile = new Pile();
 };
 
 var getWidth = function getWidth() {
@@ -30457,7 +30481,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -30477,69 +30501,90 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Pile = function () {
-	function Pile() {
-		_classCallCheck(this, Pile);
+  function Pile() {
+    _classCallCheck(this, Pile);
 
-		this.boxes = [];
-	}
+    this.boxes = [];
+  }
 
-	_createClass(Pile, [{
-		key: 'addBox',
-		value: function addBox(width, height) {
-			var box = new _box2.default(width, height);
-			if (this.boxes.length) {
-				var lastBox = this.boxes[this.boxes.length - 1];
-				if (!lastBox.pile || lastBox.height >= lastBox.pile.getHeight()) {
-					if (lastBox.width > box.width) {
-						if (!lastBox.pile) {
-							lastBox.pile = new Pile();
-						}
+  _createClass(Pile, [{
+    key: 'addBox',
+    value: function addBox(width, height) {
+      var box = new _box2.default(width, height);
+      if (this.boxes.length) {
+        var lastBox = this.boxes[this.boxes.length - 1];
+        if (!lastBox.pile || lastBox.height >= lastBox.pile.getHeight()) {
+          if (lastBox.width > box.width) {
+            if (!lastBox.pile) {
+              lastBox.pile = new Pile();
+            }
 
-						lastBox.pile.addBox(width, height);
-					} else {
-						this.boxes.push(box);
-					}
-				} else {
-					lastBox.pile.addBox(width, height);
-				}
-			} else {
-				this.boxes.push(box);
-			}
-		}
-	}, {
-		key: 'getHeight',
-		value: function getHeight() {
-			return this.boxes.map(function (a) {
-				return a.getHeight();
-			}).reduce(function (a, b) {
-				return a + b;
-			}, 0);
-		}
-	}, {
-		key: 'getHeightAt',
-		value: function getHeightAt(index) {
-			var pile = new Pile();
-			pile.boxes = this.boxes.filter(function (box, i) {
-				return i < index;
-			});
-			return pile.getHeight();
-		}
-	}, {
-		key: 'draw',
-		value: function draw(canvas) {
-			var _this = this;
+            lastBox.pile.addBox(width, height);
+          } else {
+            this.boxes.push(box);
+          }
+        } else {
+          lastBox.pile.addBox(width, height);
+        }
+      } else {
+        this.boxes.push(box);
+      }
+    }
+  }, {
+    key: 'getHeight',
+    value: function getHeight() {
+      return this.boxes.map(function (a) {
+        return a.getHeight();
+      }).reduce(function (a, b) {
+        return a + b;
+      }, 0);
+    }
+  }, {
+    key: 'getHeightAt',
+    value: function getHeightAt(index) {
+      var pile = new Pile();
+      pile.boxes = this.boxes.filter(function (box, i) {
+        return i < index;
+      });
+      return pile.getHeight();
+    }
+  }, {
+    key: 'draw',
+    value: function draw(canvas) {
+      var _this = this;
 
-			var pileStart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var pileStart = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-			this.boxes.forEach(function (box, i) {
-				var currentHeight = pileStart + _utils2.default.toPixelsSize(_this.getHeightAt(i));
-				box.draw(canvas, currentHeight);
-				box.pile && box.pile.draw(canvas, currentHeight);
-			});
-		}
-	}]);
+      this.boxes.forEach(function (box, i) {
+        var currentHeight = pileStart + _utils2.default.toPixelsSize(_this.getHeightAt(i));
+        if (!box.rect) {
+          box.draw(canvas, currentHeight);
+        }
 
-	return Pile;
+        box.pile && box.pile.draw(canvas, currentHeight);
+      });
+    }
+  }, {
+    key: 'clear',
+    value: function clear(canvas) {
+      var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'left';
+
+      //var direction = 'left';
+
+      this.boxes.forEach(function (box, i) {
+        setTimeout(function () {
+          direction = direction == 'left' ? 'right' : 'left';
+          if (box.rect) {
+            box.clear(canvas, direction);
+          }
+
+          box.pile && box.pile.clear(canvas, direction);
+        }, i * 150);
+      });
+    }
+  }]);
+
+  return Pile;
 }();
 
 exports.default = Pile;

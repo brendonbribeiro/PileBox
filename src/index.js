@@ -10,13 +10,15 @@ var cv = new fabric.Canvas('canvas');
 global.addBox = () => {
   pile.addBox(getWidth(), getHeight());
 
-  cv.clear();
+  //cv.clear();
   pile.draw(cv);
 }
 
 global.reset = () => {
-  cv.clear();
+  pile.clear(cv);
   pile = new Pile();
+  //cv.clear();
+  //pile = new Pile();
 }
 
 const getWidth = () => {
