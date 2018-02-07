@@ -1,1 +1,72 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+	<link rel="stylesheet" href="./dist/style.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body ng-app="PileApp" ng-controller="PileController" ng-cloak>
+	<div class="message is-info">
+		<div class="message-header">
+			<div>
+				<i class="fas fa-cubes"></i>
+				<span>PileBox</span>
+			</div>
+		</div>
+		<div class="message-body">
+			<div class="columns">
+				<div class="column">
+					<form name="pileForm">
+						<div class="columns">
+							<div class="column">
+								<div class="field">
+									<div class="control">
+										<input ng-model="width" name="width" class="input {{ getFieldState(pileForm.width) }}" id="width" type="number" required min="1" max="20" placeholder="width">
+									</div>
+									<p ng-show="showFieldError(pileForm.width, 'min')" class="help is-danger">width should be greater than 0</p>
+									<p ng-show="showFieldError(pileForm.width, 'max')" class="help is-danger">width should be less than or equals to 20</p>
+									<p ng-show="showFieldError(pileForm.width, 'required')" class="help is-danger">width is required</p>
+								</div>
+								<div class="help is-info">Canvas size: 960 x 600px. Scale: 1 - 20px</div>
+							</div>
+							<div class="column">
+								<div class="field">
+									<div class="control">
+										<input ng-model="height" name="height" class="input {{ getFieldState(pileForm.height) }}" id="height" type="number" required min="1" max="15" placeholder="height">
+									</div>
+									<p ng-show="showFieldError(pileForm.height, 'min')" class="help is-danger">height should be greater than 0</p>
+									<p ng-show="showFieldError(pileForm.height, 'max')" class="help is-danger">height should be less than or equals to 15</p>
+									<p ng-show="showFieldError(pileForm.height, 'required')" class="help is-danger">height is required</p>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="column is-4">
+					<button ng-click="addBox()" class="button is-primary" ng-disabled="pileForm.$invalid" type="button">
+						<span class="icon">
+							<i class="fas fa-plus"></i>
+						</span>
+						<span>Add</span>
+					</button>
+					<button ng-click="reset()" class="button is-danger" type="button">
+						<span class="icon">
+							<i class="fas fa-times"></i>
+						</span>
+						<span>Clear</span>
+					</button>
+				</div>
+			</div>
+
+			<canvas id="canvas" width="960" height="600"></canvas>
+		</div>
+	</div>
+
+	<script src="./dist/bundle.js"></script>
+</body>
+
+</html>

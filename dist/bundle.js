@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -28237,7 +28237,7 @@ fabric.util.object.extend(fabric.IText.prototype, /** @lends fabric.IText.protot
 })();
 
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4).Buffer))
 
 /***/ }),
 /* 1 */
@@ -28276,33 +28276,6 @@ module.exports = Utils;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28393,15 +28366,15 @@ var Box = function () {
 exports.default = Box;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
+
 
 var _fabric = __webpack_require__(0);
 
-var _box = __webpack_require__(3);
+var _box = __webpack_require__(2);
 
 var _box2 = _interopRequireDefault(_box);
 
@@ -28426,84 +28399,62 @@ __webpack_require__(20);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = _angular2.default.module('PileApp', ['ngRoute']).controller('PileController', ['$scope', function ($scope) {
-  $scope.batata = "cenoura";
-  console.log($scope.batata);
-}]).directive('minValue', function () {
-  return {
-    require: 'ngModel',
-    restrict: 'A',
-    link: function link($scope, $elm, $attrs, ctrl) {
+  var pile = new _pile2.default();
+  var cv = new _fabric.fabric.Canvas('canvas');
+  var heightGroup = null;
 
-      var validate = function validate(value) {
-        var minValue = $attrs.minValue;
+  $scope.addBox = function () {
+    pile.addBox($scope.width, $scope.height);
+    pile.draw(cv);
+    generateLine();
+  };
 
-        if (!value || !minValue) {
-          ctrl.$setValidity('minValue', true);
-        } else {
-          ctrl.$setValidity('minValue', parseInt(value) >= parseInt(minValue));
-        }
+  $scope.reset = function () {
+    pile.clear(cv);
+    pile = new _pile2.default();
+    cv.remove(heightGroup);
+  };
 
-        return value;
-      };
+  var generateLine = function generateLine() {
+    cv.remove(heightGroup);
+    heightGroup = new _fabric.fabric.Group([new _fabric.fabric.Line([cv.width - 15, cv.height, cv.width - 15, cv.height - _utils2.default.toPixelsSize(pile.getHeight())], {
+      strokeWidth: 2,
+      stroke: 'black'
+    }), new _fabric.fabric.Line([cv.width - 25, cv.height - _utils2.default.toPixelsSize(pile.getHeight()), cv.width - 5, cv.height - _utils2.default.toPixelsSize(pile.getHeight())], {
+      strokeWidth: 2,
+      stroke: 'black'
+    }), new _fabric.fabric.Line([cv.width - 25, cv.height - 2, cv.width - 5, cv.height - 2], {
+      strokeWidth: 2,
+      stroke: 'black'
+    }), new _fabric.fabric.Text(_utils2.default.toPixelsSize(pile.getHeight()) + 'px', {
+      fontFamily: 'Arial',
+      fontSize: 25,
+      left: cv.width - 90,
+      top: cv.height - _utils2.default.toPixelsSize(pile.getHeight()) / 2 - 15
+    })]);
 
-      ctrl.$parsers.unshift(validate);
-      ctrl.$formatters.push(validate);
+    cv.add(heightGroup);
+  };
 
-      $attrs.$observe('minValue', function () {
-        return validate(ctrl.$viewValue);
-      });
+  $scope.getFieldState = function (field) {
+    if (field && field.$touched) {
+      return field.$invalid ? 'is-danger' : 'is-success';
+    } else {
+      return 'is-info';
     }
   };
-});
 
-var pile = new _pile2.default();
-var cv = new _fabric.fabric.Canvas('canvas');
-var heightGroup = null;
-
-global.addBox = function () {
-  pile.addBox(getWidth(), getHeight());
-  pile.draw(cv);
-  generateLine();
-};
-
-global.reset = function () {
-  pile.clear(cv);
-  pile = new _pile2.default();
-  cv.remove(heightGroup);
-};
-
-var generateLine = function generateLine() {
-  cv.remove(heightGroup);
-  heightGroup = new _fabric.fabric.Group([new _fabric.fabric.Line([cv.width - 15, cv.height, cv.width - 15, cv.height - _utils2.default.toPixelsSize(pile.getHeight())], {
-    strokeWidth: 2,
-    stroke: 'black'
-  }), new _fabric.fabric.Line([cv.width - 25, cv.height - _utils2.default.toPixelsSize(pile.getHeight()), cv.width - 5, cv.height - _utils2.default.toPixelsSize(pile.getHeight())], {
-    strokeWidth: 2,
-    stroke: 'black'
-  }), new _fabric.fabric.Line([cv.width - 25, cv.height - 2, cv.width - 5, cv.height - 2], {
-    strokeWidth: 2,
-    stroke: 'black'
-  }), new _fabric.fabric.Text(_utils2.default.toPixelsSize(pile.getHeight()) + 'px', {
-    fontFamily: 'Arial',
-    fontSize: 25,
-    left: cv.width - 90,
-    top: cv.height - _utils2.default.toPixelsSize(pile.getHeight()) / 2 - 15
-  })]);
-
-  cv.add(heightGroup);
-};
-
-var getWidth = function getWidth() {
-  return parseInt(document.getElementById("width").value);
-};
-
-var getHeight = function getHeight() {
-  return parseInt(document.getElementById("height").value);
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+  $scope.showFieldError = function (field, error) {
+    if (field && field.$touched) {
+      return field.$error[error];
+    } else {
+      return false;
+    }
+  };
+}]);
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30297,7 +30248,34 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 6 */
@@ -30564,7 +30542,7 @@ var _utils = __webpack_require__(1);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _box = __webpack_require__(3);
+var _box = __webpack_require__(2);
 
 var _box2 = _interopRequireDefault(_box);
 
