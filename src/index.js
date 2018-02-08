@@ -1,14 +1,9 @@
-import {
-  fabric
-} from 'fabric'
+import { fabric } from 'fabric'
 import Box from './box.js';
 import Pile from './pile.js';
 import Utils from './utils.js';
-
 import angular from 'angular';
 import 'angular-route';
-import 'angular-sanitize'
-import 'angular-messages'
 
 var app = angular.module('PileApp', ['ngRoute'])
   .controller('PileController', ['$scope', function($scope) {

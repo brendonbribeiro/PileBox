@@ -25,13 +25,9 @@
   },
   "homepage": "https://github.com/brendonbarreto/PileBox#readme",
   "dependencies": {
-    "fabric": "^2.0.0",
     "angular": "^1.6.8",
-    "angular-animate": "^1.6.8",
-    "angular-aria": "^1.6.8",
-    "angular-messages": "^1.6.8",
     "angular-route": "^1.6.8",
-    "angular-sanitize": "^1.6.8"
+    "fabric": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
